@@ -16,13 +16,18 @@ class Blockchain:
     
     def __init__(self):
         self.chain = []
+        self.transactions = [] # List of transactions done before adding to a block.
+        # After adding transactions to a block, this list would be empty so that it cannot be added to a new block.
         self.create_block(proof = 1, previous_hash = '0')
+        self.nodes = set() # Set of IPs or ports in our case.
         
     def create_block(self, proof, previous_hash):
         block = {'index' : len(self.chain) + 1,
                  'timestamp' : str(datetime.datetime.now()),
                  'proof' : proof,
-                 'previous_hash' : previous_hash}
+                 'previous_hash' : previous_hash,
+                 'transactions' : self.transactions}
+        self.transactions = []   # Emptied transaction list.              
         self.chain.append(block)
         return block
     
@@ -64,11 +69,9 @@ class Blockchain:
             previous_block = block
             block_index += 1
         return True
+
+
     
-    
-            
-            
-        
     
         
     
